@@ -127,3 +127,14 @@ voice_sample.wav 파일은 speaker reference로 사용된다.
 다만, 본 프로젝트에서는 voice cloning 실험을 포함하는 것을 요구사항으로 두었기 때문에
 README 및 실험 구성에는 speaker reference 사용을 포함하여 설명한다.
 
+---
+
+## Citation
+
+@misc{chatterboxtts2025,  
+  author       = {{Resemble AI}},  
+  title        = {{Chatterbox-TTS}},  
+  year         = {2025},  
+  howpublished = {\url{https://github.com/resemble-ai/chatterbox}},  
+  note         = {GitHub repository}  
+}
