@@ -124,21 +124,73 @@ output_ko.wav
 
 ## Speaker Reference (Voice Cloning)
 
-voice_sample.wav 파일은 speaker reference로 사용된다.  
+voice_sample.wav 파일은 speaker reference로 사용된다.
 - 코드 레벨에서는 필수 요소는 아니며,
 - 제거하더라도 파인튜닝 및 inference는 정상 동작한다.
-  
+
 다만, 본 프로젝트에서는 voice cloning 실험을 포함하는 것을 요구사항으로 두었기 때문에
 README 및 실험 구성에는 speaker reference 사용을 포함하여 설명한다.
 
 ---
 
+## CLI Inference (inference_tts.py)
+
+파라미터화된 추론 스크립트로, Streamlit 웹앱 통합 및 일괄 처리에 적합하다.
+
+### Basic Usage
+
+```bash
+# 텍스트 직접 입력
+python inference_tts.py \
+  --text "안녕하세요, 반갑습니다." \
+  --output output.wav \
+  --checkpoint final.pt
+
+# 텍스트 파일에서 읽기
+python inference_tts.py \
+  --text-file input.txt \
+  --output output.wav \
+  --checkpoint final.pt
+```
+
+### Voice Cloning
+
+```bash
+python inference_tts.py \
+  --text "안녕하세요, 반갑습니다." \
+  --voice-prompt prompt.wav \
+  --output output.wav \
+  --checkpoint final.pt
+```
+
+### All Arguments
+
+| Argument | Type | Default | Description |
+|----------|------|---------|-------------|
+| `--text` | str | None | 합성할 텍스트 (직접 입력) |
+| `--text-file` | str | None | 텍스트 파일 경로 (--text 대신 사용) |
+| `--output` | str | (필수) | 출력 오디오 파일 경로 |
+| `--voice-prompt` | str | None | Voice cloning용 오디오 파일 |
+| `--language` | str | ko | 언어 코드 (ko, en, ja, zh) |
+| `--checkpoint` | str | None | 파인튜닝된 체크포인트 경로 |
+| `--exaggeration` | float | 0.5 | 표현력 조절 (0.0-1.0) |
+| `--cfg-weight` | float | 0.5 | CFG 가중치 (0.0-1.0) |
+
+### Notes
+
+- `--text` 또는 `--text-file` 중 하나는 반드시 제공해야 함
+- `--checkpoint` 미제공 시 ChatterboxMultilingualTTS (vanilla) 모델 사용
+- `--checkpoint` 제공 시 ChatterboxTTS + finetuned weights 로드
+- 파인튜닝된 체크포인트(final.pt)는 한국어에 최적화되어 있음
+
+---
+
 ## Citation
 
-@misc{chatterboxtts2025,  
-  author       = {{Resemble AI}},  
-  title        = {{Chatterbox-TTS}},  
-  year         = {2025},  
-  howpublished = {\url{https://github.com/resemble-ai/chatterbox}},  
-  note         = {GitHub repository}  
+@misc{chatterboxtts2025,
+  author       = {{Resemble AI}},
+  title        = {{Chatterbox-TTS}},
+  year         = {2025},
+  howpublished = {\url{https://github.com/resemble-ai/chatterbox}},
+  note         = {GitHub repository}
 }
